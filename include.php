@@ -1,11 +1,12 @@
 <?php
 
 
-require_once  __DIR__ . '/../conn.php';
-if (!isset($_SESSION['admin_id'])) {
+session_start();
+if (!isset($_SESSION['rider_id'])) {
     header('location:login.php');
 }
 
-$admin_id = $_SESSION['admin_id'];
-$res = $conn->query("select * from admin where id='$admin_id'");
-$admin = $res->fetch_assoc();
+require_once '../conn.php';
+$rider_id = $_SESSION['rider_id'];
+$res = $conn->query("select * from riders where id='$rider_id'");
+$rider = $res->fetch_assoc();
