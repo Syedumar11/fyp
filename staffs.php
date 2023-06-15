@@ -3,7 +3,7 @@
 
 require_once 'include.php';
 
-$table = $conn->query("select * from notice");
+$table = $conn->query("select * from staff");
 
 
 ?>
@@ -45,18 +45,17 @@ $table = $conn->query("select * from notice");
     
 <body>
 
-   
+<?php include_once "sidebar.php" ?>
     
-    <?php include_once "sidebar.php" ?>
     <!-- main -->
     <section class="main">
     
         
-            <div class="container py-2 p-md-3 ">
+            <div class="container py-1 p-md-1 ">
                 
 
 
-                <h1 class="mb-4 ">Manage Notices <a href="add_notice.php" class='btn btn-danger btn-sm fs-6'><i class="fas fa-plus-circle"></i>Add New Notice </a></h1>
+                <h1 class="mb-4 ">Manage Staff Of Teacher <a href="add_staff.php" class='btn btn-danger btn-sm fs-6'><i class="fas fa-plus-circle"></i>Add New Staff & Teacher </a></h1>
                 <!-- <p>Semester: 5</p> -->
                 <div class="table-responsive">
                     <table id="myTable" class="
@@ -64,7 +63,7 @@ $table = $conn->query("select * from notice");
                 border-secondary border-3
                 text-center
                 shadow
-              " style="min-width: 530px">
+              ">
                         <thead class="
                   border-bottom border-dark border-2
                   bg-secondary
@@ -72,42 +71,48 @@ $table = $conn->query("select * from notice");
                 ">
 
                 
-                <tr style="background-color:#16123f;">
+                <tr style="background-color:orange;">
                 <th scope="col">x</th>
-                                <th scope="col">Sr.</th>
-                                <th scope="col"style="height:20%; width:5%; ">Photo</th>
-                                <th scope="col">Starting_date</th>
-                                <th scope="col">Ending Date</th>
-                                <th scope="col">details</th>
-                                <th scope="col">Days</th>
-                               
-                                <th scope="col">Action</th>
-                        
+                                <th scope="col"style="width:2%;">Sr.</th>
+                                <th scope="col"style="height:20%; width:10%; ">Photo</th>
+                                <th scope="col"style="height:20%; width:10%; ">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Gander</th>
+                                <th scope="col">Religion</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Sallary PKR</th>
+          
+                                <th scope="col"style=" width:26%;">Actions</th>
 
                             </tr>
                         </thead>
                         <tbody>
                         
                         
-                            <?php foreach ($table  as $ind =>  $row) {
+                            <?php foreach ($table  as $ind =>  $staf) {
                             ?>
                                 <tr style="background-color:white;">
                           
-           <td> <input title="delete" type="checkbox" class="form-check-input"style="background-color:#f16775;"/>
+                        <td style="width:1%;"> <input title="delete" type="checkbox" class="form-check-input"style="background-color:#f16775;"/>
                             <label for="delete" class="form-check-label "></label></td>
 
                         
-                                    <td scope="col"><?php echo $ind + 1; ?></td>
+                                    <td scope="col"style="width:1%;"><?php echo $ind + 1; ?></td>
                                                 
                            
-                                    <td scope="col"><img class=" mt-2" src="images/<?php echo $row['file1']?>" alt="avatar" style="width:77%;  margin: 0 auto;"></td>
+                                    <td scope="col"><img class="rounded-circle mt-2" src="images/<?php echo $staf['file1']?>" alt="avatar" style="width:80%;  margin: 0 auto;"></td>
 
                                 
-                                    <td scope="col"><?php echo $row['starting_date']; ?></td>
-                                    <td scope="col"><?php echo $row['ending_date']; ?></td>
-                                    <td scope="col"><?php echo $row['details']; ?></td>
-                                    <td scope="col"><?php echo $row['days']; ?></td>
-                                   
+                                    <td scope="col"><?php echo $staf['name']; ?></td>
+                                    <td scope="col"><?php echo $staf['email']; ?></td>
+                                    <td scope="col"><?php echo $staf['phone']; ?></td>
+                                    <td scope="col"><?php echo $staf['gander']; ?></td>
+                                    <td scope="col"><?php echo $staf['religion']; ?></td>
+                                    <td scope="col"><?php echo $staf['address1']; ?></td>
+                                    <td scope="col"><?php echo $staf['designation']; ?></td>
+                                    <td scope="col"><?php echo $staf['sallary']; ?></td>
                                
                                     <td style="background-color:#E8E2e9;">
                                         <!-- <span><a class="text_success"><i class="fa fa-pencil" aria-hidden="true"></i></a></span> -->
@@ -115,8 +120,14 @@ $table = $conn->query("select * from notice");
                                         <!-- <span><a href="" class="text_danger"> <i class="fa fa-pencil" aria-hidden="true"></i></a></span> -->
                                         <!-- <span><i class="fa fa-pencil" aria-hidden="true"></i></span> -->
 
-                                        <a title="delete" class="btn btn-danger del-notice" href="del_notice.php?id=<?php echo $row['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                        
+
+
+                                       
+                           
+                                      
+                                        <a title="delete" class="btn btn-danger del-user" href="del_staff.php?id=<?php echo $staf['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        <a class="btn edit-btn btn-warning" href="staf.php?id=<?php echo $staf['id']; ?>"> <i class="fas fa-edit"></i> Edit</a> </h1>
+
 
                                     </td>
                                 </tr>
@@ -124,7 +135,7 @@ $table = $conn->query("select * from notice");
                         </tbody>
                     </table>
                 </div>
-                <a name="dell" type="checkbox" title="delete" class="btn btn-danger del-notice" href="del_notice.php?id=<?php echo $row['id']; ?>">Delete All</a>
+                <a name="dell" type="checkbox" title="delete" class="btn btn-danger del-user" href="del_staff.php?id=<?php echo $staf['id']; ?>">Delete All</a>
 
 
             </div>
@@ -148,7 +159,7 @@ $table = $conn->query("select * from notice");
     <script>
         $('.del-user').click(function(e) {
 
-            if (confirm("are you sure you want to delete this user")) {
+            if (confirm("are you sure you want to delete this staff")) {
 
             } else {
                 e.preventDefault();

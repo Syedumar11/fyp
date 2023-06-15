@@ -4,59 +4,58 @@ require_once 'include.php';
 
 
 if (!isset($_GET['id'])) {
-    header('location:results.php');
+    header('location:users.php');
 }
 
 $u_id = $_GET['id'];
-$result = $conn->query("SELECT * from results where id='$u_id'");
+$staf = $conn->query("SELECT * from staff where id='$u_id'");
 
-if ($result->num_rows < 1) {
+if ($staf->num_rows < 1) {
 
-    header('location:results.php');
+    header('location:staffs.php');
 }
-$result = $result->fetch_assoc(); 
+$staf = $staf->fetch_assoc();
 
 
 
 
-$name = $result['name'];
-$rollno = $result['rollno'];
-$class = $result['class'];
-$marks = $result['marks'];
-$gander = $result['gander'];
-$grade = $result['grade'];
-$detail = $result['detail'];
-$file1=$result['file1'];
-$filename1=$result['name'];
+$name = $staf['name'];
+$email = $staf['email'];
+$password = $staf['password'];
+$phone = $staf['phone'];
+$address1 = $staf['address1'];
+$designation = $staf['designation'];
+$sallary = $staf['sallary'];
+$file1=$staf['file1'];
+$filename1=$staf['name'];
 $email_err = "";
 if (isset($_POST['edit_product'])) {
 
     $name = $_POST['name'];
-    $rollno = $_POST['rollno'];
-    $class = $_POST['class'];
-    $marks = $_POST['marks'];
-    $gander = $_POST['gander'];
-    $grade = $_POST['grade'];
-    $detail = $_POST['detail'];
-    
+
+    $password = $_POST['password'];
+    $phone = $_POST['phone'];
+    $address1 = $_POST['address1'];
+    $designation = $_POST['designation'];
+    $sallary = $_POST['sallary'];
     $file1=$_POST['file1'];
     $filename1=$_POST['name'];
     $valid = true;
 
 
-    if ($_POST['rollno'] != $rollno) {
-        $check_rollno = $conn->query("SELECT id from results where rollno='" . $_POST['rollno'] . "'");
+    if ($_POST['email'] != $email) {
+        $check_email = $conn->query("SELECT id from staff where email='" . $_POST['email'] . "'");
 
-        if ($check_rollno->num_rows > 0) {
+        if ($check_email->num_rows > 0) {
             $valid = false;
-            $rollno_err = "rollno already registered!";
+            $email_err = "email already registered!";
         }
     }
-    $rollno = $_POST['rollno'];
+    $email = $_POST['email'];
     if ($valid) {
-        $conn->query("UPDATE `results` set `name`='$name',`rollno`='$rollno',`class`='$class',`marks`='$marks',`detail`='$detail',`gander`='$gander',`grade`='$grade',`file1`='$file1'  where id='$u_id'");
+        $conn->query("UPDATE `staff` set `name`='$name',`email`='$email',`password`='$password',`phone`='$phone',`address1`='$address1',`designation`='$designation',`sallary`='$sallary',`file1`='$file1'  where id='$u_id'");
 
-        header('location:results.php?id=' . $u_id);
+        header('location:staffs.php?id=' . $u_id);
     }
 }
 
@@ -130,7 +129,7 @@ if (isset($_POST['edit_product'])) {
     </div>
     <!-- end of model for showing uploaded images -->
 
-    <?php include_once "sidebar-teacher.php" ?>
+    <?php include_once "sidebar.php" ?>
     <!-- main -->
     <section class="main">
         <div>
@@ -138,66 +137,48 @@ if (isset($_POST['edit_product'])) {
                 <div class="p-3">
                     <a href="users.php" class="btn btn-sm text-light" style="background-color:var(--main-color)"> <i class="fas fa-arrow-left"></i> Back</a>
                 </div>
-                <h1 class="mb-4 text-center"> <i class='fas fa-plus text-success'></i> Student Result Info <a class="btn edit-btn btn-warning"> <i class="fas fa-edit"></i> Edit</a> </h1>
-                <form class="row my-4 shadow border mx-auto p-3" style='max-width:630px' method="post" action="result.php?id=<?php echo $u_id; ?>">
+                <h1 class="mb-4 text-center"> <i class='fas fa-plus text-success'></i> Employee Info <a class="btn edit-btn btn-warning"> <i class="fas fa-edit"></i> Edit</a> </h1>
+                <form class="row my-4 shadow border mx-auto p-3" style='max-width:630px' method="post" action="staf.php?id=<?php echo $u_id; ?>">
                     <div class=" col-md-6 mt-4">
                         <label for="" class="form-label fw-bold">Name</label>
                         <input readonly required name="name" value="<?php echo $name ?>" type="text" class="form-control rounded-0" />
                     </div>
 
-                   
-                   
                     <div class=" col-md-6 mt-4">
-                        <label for="" class="form-label fw-bold">Roll No</label>
-                        <input value="<?php echo $rollno; ?>" required placeholder="Enter Rollno" name="rollno" type="text" class="form-control rounded-0" />
-                    </div>
-                    
-                    
+                        <label for="" class="form-label fw-bold">Email</label>
+                        <input readonly required name="email" value="<?php echo $email ?>" type="email" class="form-control rounded-0" />
 
-                    <div class=" col-md-6 mt-4">
-                        <label for="" class="form-label fw-bold">Calss & Section</label>
-                        <input value="<?php echo $class; ?>" required placeholder="Enter Calss & Section(a).." name="class" type="text" class="form-control rounded-0" />
-                    </div>
-
-                    <div class=" col-md-6 mt-4">
-                        <label for="" class="form-label fw-bold">Marks</label>
-                        <input value="<?php echo $marks; ?>" required placeholder="Enter Calss & Section(a).." name="marks" type="text" class="form-control rounded-0" />
+                        <p class="text-danger" style="font-size: 13px;"><?php echo $email_err; ?></p>
                     </div>
                     <div class=" col-md-6 mt-4">
-                        <label for="" class="form-label fw-bold">Grade</label>
-                        <input value="<?php echo $grade; ?>" required placeholder="Enter your grade.." name="grade" type="text" class="form-control rounded-0" />
+                        <label for="" class="form-label fw-bold">Password</label>
+                        <input readonly required name="password" value="<?php echo $password ?>" type="password" class="form-control rounded-0" />
                     </div>
-                   
-                                
+                    <div class=" col-md-6 mt-4">
+                        <label for="" class="form-label fw-bold">Phone</label>
+                        <input readonly required name="phone" value="<?php echo $phone ?>" type="tel" class="form-control rounded-0" />
+                    </div>
                     <div class="  mt-4">
-                                <label for="" class="form-label fw-bold">Grade Policy*</label>
-                                <select class="wide w-100" id="" name="detail">
-                                <option value="Choose..." data-display="Select">Select Grade Policy...</option>
-                                <option name="gander">IF 85% To 90%= +A, 65% To 80%= B,50%= C, 40%= D</option>
-                               
-    </select>
-    </div>     
-       
-                                 
+                        <label for="" class="form-label fw-bold">address</label>
+                        <textarea readonly required name="address1" class="form-control rounded-0"><?php echo $address1 ?></textarea>
+                    </div>
 
-                  
-                    <div class=" col-md-4 mt-4">
-                                <label for="" class="form-label fw-bold">Gander*</label>
-                                <select class="wide w-100" id="" name="gander">
-                                <option value="Choose..." data-display="Select">SELECT GANDER...</option>
-                                <option name="gander">MALE</option>
-                                <option name="gander">FEMALE</option>
-                                <option name="gander">OTHER</option>
-    </select>
-    </div>
-     
-    <div class=" col-md-9 mt-4">
+                    <div class=" col-md-6 mt-4">
+                        <label for="" class="form-label fw-bold">Designation</label>
+                        <input readonly required name="designation" value="<?php echo $designation ?>" type="tel" class="form-control rounded-0" />
+                    </div>
+
+                    <div class=" col-md-6 mt-4">
+                        <label for="" class="form-label fw-bold">Sallary</label>
+                        <input readonly required name="sallary" value="<?php echo $sallary ?>" type="tel" class="form-control rounded-0" />
+                    </div>
+
+                    <div class=" col-md-9 mt-4">
                     <label for="" class="form-label fw-bold">Profile</label>
-                                <input type="file"  name="file1"style="margin-left:10%;"></div>     
-                               
+                                <input type="file"  name="file1"style="margin-left:10%;"></div>
+    
 
-
-                                <div class=" text-end">
+                    <div class=" text-end">
                         <hr class="my-5 mx-auto" style=" height: 4px; background-color: var(--main-color); opacity: 1;" />
                         <button class="btn btn-1 px-4 d-none" name="edit_product">Update</button>
                     </div>

@@ -2,18 +2,18 @@
 
 require_once '../conn.php';
 
-if (isset($_SESSION['admin_id'])) {
-  header('location:index.php');
+if (isset($_SESSION['staff_id'])) {
+  header('location:teacher-index.php');
 }
 
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $res = $conn->query("select id from admin where email='$email' and password ='$password'");
+  $res = $conn->query("select id from staff where email='$email' and password ='$password'");
   if ($res->num_rows > 0) {
-    $_SESSION['admin_id'] = $res->fetch_assoc()['id'];
-    header('location:index.php');
+    $_SESSION['staff_id'] = $res->fetch_assoc()['id'];
+    header('location:teacher-index.php');
   } else {
     echo "<script>alert('wrong email or password')</script>";
   }
@@ -46,8 +46,8 @@ if (isset($_POST['login'])) {
       <img src="images/sms3.png" class="w-100" style="max-width: 400px" alt="" />
     </div>
     <!-- <h1 style="color: hotpink;">E_florist</h1> -->
-    <form action="login.php" method="post" style="width: 350px">
-      <h2 class="text-center">Admin Login</h2>
+    <form action="teacher-login.php" method="post" style="width: 350px">
+      <h2 class="text-center">Teacher Login</h2>
       <div class="mt-4 input-element-1">
         <i class="fas fa-envelope mb-1"></i>
         <input type="email" name="email" placeholder="Enter Email" />
@@ -60,9 +60,7 @@ if (isset($_POST['login'])) {
       <div class="mt-5">
         <button class="btn w-100 text-light " name="login" style="background-color: #704d97;">Continue</button>
       </div>
-      <div class="mt-5">
-        <a href="signupteacher.php" name="" style="color:red; margin-left:70%; font-size:120%;">Sign Up</a>
-      </div>
+      
     </form>
   </div>
   <script src="assets/js/popper.js"></script>

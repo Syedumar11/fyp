@@ -3,12 +3,21 @@
 
 require_once 'include.php';
 
-$table = $conn->query("select * from notice");
+$table = $conn->query("select * from attandance");
 
 
 ?>
 
 
+<?php
+
+         
+$a = $conn->query("select * from attandance ");
+
+
+
+$res = $res->fetch_assoc();
+?>
 
 
 
@@ -47,7 +56,7 @@ $table = $conn->query("select * from notice");
 
    
     
-    <?php include_once "sidebar.php" ?>
+<?php include_once "sidebar-teacher.php" ?>
     <!-- main -->
     <section class="main">
     
@@ -56,7 +65,7 @@ $table = $conn->query("select * from notice");
                 
 
 
-                <h1 class="mb-4 ">Manage Notices <a href="add_notice.php" class='btn btn-danger btn-sm fs-6'><i class="fas fa-plus-circle"></i>Add New Notice </a></h1>
+                <h1 class="mb-4 ">Manage Daily Students Attandace <a href="add_attandance.php" class='btn btn-danger btn-sm fs-6'><i class="fas fa-plus-circle"></i>Add Today Attandace </a></h1>
                 <!-- <p>Semester: 5</p> -->
                 <div class="table-responsive">
                     <table id="myTable" class="
@@ -72,16 +81,20 @@ $table = $conn->query("select * from notice");
                 ">
 
                 
-                <tr style="background-color:#16123f;">
+                <tr style="background-color:#d85c27;">
                 <th scope="col">x</th>
                                 <th scope="col">Sr.</th>
-                                <th scope="col"style="height:20%; width:5%; ">Photo</th>
-                                <th scope="col">Starting_date</th>
-                                <th scope="col">Ending Date</th>
-                                <th scope="col">details</th>
-                                <th scope="col">Days</th>
-                               
-                                <th scope="col">Action</th>
+                                <th scope="col">Today</th>
+                                <th scope="col">St Namne</th>
+                                
+                                <th scope="col">Roll.no</th>
+                                <th scope="col">class</th>
+                                
+                                <th scope="col">fine</th>
+                                <th scope="col">Absent</th>
+                                <th scope="col">Present</th>
+                                <th scope="col">Leave</th>
+                                <th scope="col"style="width:76%;">Actions</th>
                         
 
                             </tr>
@@ -93,30 +106,29 @@ $table = $conn->query("select * from notice");
                             ?>
                                 <tr style="background-color:white;">
                           
-           <td> <input title="delete" type="checkbox" class="form-check-input"style="background-color:#f16775;"/>
+           <td> <input title="delete" type="checkbox" name="dell" class="form-check-input"style="background-color:#f16775;"/>
                             <label for="delete" class="form-check-label "></label></td>
 
                         
                                     <td scope="col"><?php echo $ind + 1; ?></td>
-                                                
-                           
-                                    <td scope="col"><img class=" mt-2" src="images/<?php echo $row['file1']?>" alt="avatar" style="width:77%;  margin: 0 auto;"></td>
-
-                                
-                                    <td scope="col"><?php echo $row['starting_date']; ?></td>
-                                    <td scope="col"><?php echo $row['ending_date']; ?></td>
-                                    <td scope="col"><?php echo $row['details']; ?></td>
-                                    <td scope="col"><?php echo $row['days']; ?></td>
-                                   
+                                    <td scope="col"style="width:30%;"><?php echo $row['date']; ?></td>
+                                    <td scope="col"><?php echo $row['name']; ?></td>
+                                    <td scope="col"><?php echo $row['rollno']; ?></td>
+                                    <td scope="col"><?php echo $row['class']; ?></td>
+                                    
+                                    <td scope="col"><?php echo $row['fine']; ?></td>
+                                    <td scope="col"><?php echo $row['p']; ?> </td>
+                                    <td scope="col"><?php echo $row['a']; ?></td>
+                                    <td scope="col"><?php echo $row['l']; ?></td>
                                
                                     <td style="background-color:#E8E2e9;">
                                         <!-- <span><a class="text_success"><i class="fa fa-pencil" aria-hidden="true"></i></a></span> -->
                                         <!-- <span><a class='text-danger' href=""><i class="fa fa-times" aria-hidden="true"></a></span> -->
                                         <!-- <span><a href="" class="text_danger"> <i class="fa fa-pencil" aria-hidden="true"></i></a></span> -->
                                         <!-- <span><i class="fa fa-pencil" aria-hidden="true"></i></span> -->
+                                        <a title="delete" class="btn btn-danger del-attandance" href="del_attandance.php?id=<?php echo $row['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
 
-                                        <a title="delete" class="btn btn-danger del-notice" href="del_notice.php?id=<?php echo $row['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                        
+                                       
 
                                     </td>
                                 </tr>
@@ -124,8 +136,8 @@ $table = $conn->query("select * from notice");
                         </tbody>
                     </table>
                 </div>
-                <a name="dell" type="checkbox" title="delete" class="btn btn-danger del-notice" href="del_notice.php?id=<?php echo $row['id']; ?>">Delete All</a>
-
+                <a name="dell" type="checkbox" title="delete" class="btn btn-danger del-attandance" href="del_attandance.php?id=<?php echo $row['id']; ?>">Delete All</a>
+                <a class="btn btn-warning me-3 fa fa-download" href="https://wwww.blank.com"></a>
 
             </div>
         </div>
@@ -148,7 +160,7 @@ $table = $conn->query("select * from notice");
     <script>
         $('.del-user').click(function(e) {
 
-            if (confirm("are you sure you want to delete this user")) {
+            if (confirm("are you sure you want to delete this attandance")) {
 
             } else {
                 e.preventDefault();

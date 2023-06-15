@@ -3,7 +3,7 @@
 
 require_once 'include.php';
 
-$table = $conn->query("select * from notice");
+$table = $conn->query("select * from parent");
 
 
 ?>
@@ -44,89 +44,83 @@ $table = $conn->query("select * from notice");
     background-attachment: fixed;">
     
 <body>
-
-   
-    
     <?php include_once "sidebar.php" ?>
     <!-- main -->
     <section class="main">
-    
-        
-            <div class="container py-2 p-md-3 ">
-                
-
-
-                <h1 class="mb-4 ">Manage Notices <a href="add_notice.php" class='btn btn-danger btn-sm fs-6'><i class="fas fa-plus-circle"></i>Add New Notice </a></h1>
+        <div>
+            <div class="container py-4 p-md-1">
+                <h1 class="mb-4 ">Manage Parents <a href="add_parent.php" class='btn btn-danger btn-sm fs-6'style="background-color:#;"><i class="fas fa-plus-circle"></i>Add New Parent</a></h1>
                 <!-- <p>Semester: 5</p> -->
-                <div class="table-responsive">
-                    <table id="myTable" class="
+                <div class="table-responsive" >
+                <table id="myTable" class="
                 table 
                 border-secondary border-3
                 text-center
                 shadow
-              " style="min-width: 530px">
+              " style="min-width: 690px">
                         <thead class="
                   border-bottom border-dark border-2
                   bg-secondary
-                  text-white
+                  text-white font-size 25%
                 ">
 
+
                 
-                <tr style="background-color:#16123f;">
-                <th scope="col">x</th>
-                                <th scope="col">Sr.</th>
+                <tr style="background-color:#482673;">
+                                <th scope="col">ID.</th>
+                                
                                 <th scope="col"style="height:20%; width:5%; ">Photo</th>
-                                <th scope="col">Starting_date</th>
-                                <th scope="col">Ending Date</th>
-                                <th scope="col">details</th>
-                                <th scope="col">Days</th>
-                               
-                                <th scope="col">Action</th>
-                        
+                                <th scope="col">Teacher Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col"style="width:56%;">Teacher Email</th>
+                           
+                                <th scope="col">Phone</th>
+                       
+                                <th scope="col">Gander </th>
+                                <th scope="col"style="width:%;">Address </th>
+                                <th scope="col"style="width:76%;">Actions</th>
+                              
 
                             </tr>
                         </thead>
+                       
                         <tbody>
-                        
-                        
-                            <?php foreach ($table  as $ind =>  $row) {
+
+                            <?php foreach ($table  as $ind =>  $parent) {
                             ?>
-                                <tr style="background-color:white;">
-                          
-           <td> <input title="delete" type="checkbox" class="form-check-input"style="background-color:#f16775;"/>
-                            <label for="delete" class="form-check-label "></label></td>
-
-                        
+                         <tr style="background-color:white;">
                                     <td scope="col"><?php echo $ind + 1; ?></td>
-                                                
-                           
-                                    <td scope="col"><img class=" mt-2" src="images/<?php echo $row['file1']?>" alt="avatar" style="width:77%;  margin: 0 auto;"></td>
-
-                                
-                                    <td scope="col"><?php echo $row['starting_date']; ?></td>
-                                    <td scope="col"><?php echo $row['ending_date']; ?></td>
-                                    <td scope="col"><?php echo $row['details']; ?></td>
-                                    <td scope="col"><?php echo $row['days']; ?></td>
-                                   
-                               
+                                    <td scope="col"><img class="rounded-circle mt-2" src="images/<?php echo $parent['file1']?>" alt="avatar" style="width:77%;  margin: 0 auto;"></td>
+                                    <td scope="col"><?php echo $parent['name']; ?></td>
+                                    <td scope="col"><?php echo $parent['lname']; ?></td>
+                                    <td scope="col"><?php echo $parent['email']; ?></td>
+                                    <td scope="col"><?php echo $parent['phone']; ?></td>
+                          
+                                    <td scope="col"><?php echo $parent['gander']; ?></td>
+                                    <td scope="col"><?php echo $parent['address']; ?></td>
+                        
+                                 
+                             
+                        
+                            
                                     <td style="background-color:#E8E2e9;">
                                         <!-- <span><a class="text_success"><i class="fa fa-pencil" aria-hidden="true"></i></a></span> -->
                                         <!-- <span><a class='text-danger' href=""><i class="fa fa-times" aria-hidden="true"></a></span> -->
                                         <!-- <span><a href="" class="text_danger"> <i class="fa fa-pencil" aria-hidden="true"></i></a></span> -->
                                         <!-- <span><i class="fa fa-pencil" aria-hidden="true"></i></span> -->
 
-                                        <a title="delete" class="btn btn-danger del-notice" href="del_notice.php?id=<?php echo $row['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                        
+                                        <a title="delete" class="btn btn-danger del-parent" href="del_parent.php?id=<?php echo $parent['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
 
+
+                                        <a href="parent.php?id=<?php echo $parent['id']; ?>"class="btn edit-btn btn-warning"> <i class="fas fa-edit"></i> Edit</a> </h1>
+
+ 
                                     </td>
                                 </tr>
                             <?php } ?>
                         </tbody>
                     </table>
                 </div>
-                <a name="dell" type="checkbox" title="delete" class="btn btn-danger del-notice" href="del_notice.php?id=<?php echo $row['id']; ?>">Delete All</a>
-
-
             </div>
         </div>
     </section>

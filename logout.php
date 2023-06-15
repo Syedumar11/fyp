@@ -2,6 +2,5 @@
 
 session_start();
 
-unset($_SESSION['u_id']);
-
-header('location:index.php');
+unset($_SESSION['admin_id']);
+header('location:login.php');
